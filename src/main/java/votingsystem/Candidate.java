@@ -20,4 +20,9 @@ public class Candidate {
     public void addVoice() {
         voices++;
     }
+
+    @Override
+    public String toString() {
+        return  name + ": " + getVoices() + " voices.";
+    }
 }

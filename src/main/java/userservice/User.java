@@ -1,6 +1,6 @@
 package userservice;
 
-public class User {
+abstract public class User {
 
     private String name;
     private String login;
@@ -12,5 +12,15 @@ public class User {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
