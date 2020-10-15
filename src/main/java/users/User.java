@@ -1,6 +1,6 @@
-package userservice;
+package users;
 
-abstract public class User {
+public class User {
 
     private String name;
     private String login;
