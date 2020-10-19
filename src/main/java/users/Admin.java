@@ -25,18 +25,4 @@ public class Admin extends User {
         }
         return admin;
     }
-
-    public Voting createVoting() {
-        return null;
-    }
-
-    public void checkVotingResults() {
-
-    }
-
-
-
-
-
-
 }

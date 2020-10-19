@@ -29,7 +29,6 @@ public class Elector extends User {
 
     @Override
     public String toString() {
-        return getName() + ": \n" +
-                "login: " + getLogin() + ". isVoted: " + isVoted();
+        return "User " + getName() + ". Login: " + getLogin() + ". isVoted: " + isVoted();
     }
 }

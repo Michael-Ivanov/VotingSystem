@@ -29,7 +29,7 @@ public class UI {
 
     public void startMenu() {
         while (true) {
-            System.out.println("\nHello. Voting System main menu.\n");
+            System.out.println("\nHello. Voting System main menu.");
             System.out.println("1. Register new account.");
             System.out.println("2. Log in existing account.");
             System.out.println("3. Exit.");
@@ -51,16 +51,22 @@ public class UI {
                     String login = getUniqueLogin(); // todo: переделать на findUser
                     System.out.print("Enter new password: ");
                     String password = scanner.nextLine();
-                    votingSystem.addUser(name, login, password);
-                    System.out.println("New user " + name + " registered.");
+                    int result = votingSystem.addUser(name, login, password);
+                    if (result > 0) {
+                        System.out.println("Processed " + result + " row");
+                        System.out.println("New user " + name + " registered.");
+                    } else {
+                        System.out.println("Unexpected error happened. " +
+                                "Result code for adding user operation: " + result);
+                    }
                     break;
                 case 2:
                     System.out.print("\nPlease enter login: ");
                     String userLogin = scanner.nextLine();
-                    System.out.print("\nPlease enter password: ");
+                    System.out.print("Please enter password: ");
                     String userPassword = scanner.nextLine();
                     User user = votingSystem.getLoggedUser(userLogin, userPassword);
-                    userMenu(user);
+                    defineUser(user);
                     break;
                 case 3:
                     System.out.println("Goodbye");
@@ -72,7 +78,7 @@ public class UI {
         }
     }
 
-    private void userMenu(User user) {
+    private void defineUser(User user) {
         if (user != null) {
             Elector elector = new Elector(user);
             if (user.getClass() == Admin.class) {
@@ -85,7 +91,8 @@ public class UI {
                     votingUI(voting, elector);
                 }
             }
-
+        } else {
+            System.out.println("No user with such name or password found.");
         }
     }
 
@@ -140,8 +147,6 @@ public class UI {
                     System.out.println("Please enter a correct number");
                     break;
             }
-
-
         }
     }
 
@@ -151,7 +156,7 @@ public class UI {
         String title = scanner.nextLine();
         List<Candidate> candidates = new ArrayList<>();
         String newCandidate = "";
-        while(true) {
+        while (true) {
             System.out.print("Enter a new candidate(\"end\" to finish): ");
             newCandidate = scanner.nextLine();
             if ("end".equalsIgnoreCase(newCandidate)) {
@@ -178,7 +183,7 @@ public class UI {
 
     private void votingUI(Voting voting, Elector elector) {
         if (voting == null) {
-            System.out.println("Sorry, nothing to vote for yet");
+            System.out.println("No voting available.");
             return;
         }
         System.out.println("Voting \"" + voting.getTitle() + "\"");
@@ -196,3 +201,4 @@ public class UI {
         System.out.println("Thanks for your voice.");
     }
 }
+// todo: сделать "press any key to continue..." после сообщений пользователю.
