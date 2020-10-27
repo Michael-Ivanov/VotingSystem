@@ -23,8 +23,9 @@ public class DBService {
         properties.setProperty("password", "postgres");
         Connection connection = null;
         try {
+            Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(dbUrl, properties);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return connection;
@@ -71,5 +72,14 @@ public class DBService {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public void closeConnectionToDB() {
+        try {
+            connection.close();
+            System.out.println("Connection to DB closed");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package ui;
+package commandlineui;
 
 import users.Admin;
 import users.Elector;
@@ -12,7 +12,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class UI {
+public class CommandLineUI {
 
     private Scanner scanner = new Scanner(System.in);
 
@@ -21,7 +21,7 @@ public class UI {
     private Admin admin;
     private Elector currentElector;
 
-    public UI(List<User> users) {
+    public CommandLineUI(List<User> users) {
         this.users = users;
         admin = Admin.getInstance();
         votingSystem = VotingSystem.getInstance();

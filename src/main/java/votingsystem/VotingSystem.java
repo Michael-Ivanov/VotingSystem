@@ -1,7 +1,7 @@
 package votingsystem;
 
 import database.DBService;
-import ui.UI;
+import commandlineui.CommandLineUI;
 import users.Admin;
 import users.User;
 
@@ -14,18 +14,10 @@ public class VotingSystem {
     private Voting currentVoting;
     private DBService dbService;
 
-    public VotingSystem() {
+    private VotingSystem() {
         dbService = new DBService();
         this.users = getUsersListFromDB();
 //        dbService.printConnectionInfo();  // Проверка подключения к базе
-    }
-
-    public static void main(String[] args) {
-        getInstance().starter();
-    }
-
-    private void starter() {
-        new UI(users).startMenu();
     }
 
     //    Получение экземпляра VotingSystem
@@ -34,6 +26,10 @@ public class VotingSystem {
             votingSystem = new VotingSystem();
         }
         return votingSystem;
+    }
+
+    public DBService getDbService() {
+        return dbService;
     }
 
     public Voting getCurrentVoting() {
@@ -76,7 +72,7 @@ public class VotingSystem {
                 return user;
             }
         }
-        return null;
+        return null;  //todo: переделать, чтобы не возвращало null
     }
 
     //    Получение экземпляра пользователя по логину и паролю
