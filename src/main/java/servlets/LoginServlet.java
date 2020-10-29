@@ -23,13 +23,21 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/index.jsp");
         User user = votingSystem.findUser(login, password);
 
-        //Небольшой костыль, чтобы различать на index.jsp пришел некорректный запрос или запроса не было
+        RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/jsp/user_voting.jsp");
+
         if (user == null) {
+            // чтобы различать на index.jsp, пришел некорректный запрос или запроса не было
+            // переадресуем на ту же страницу, возвращая специальное значение пользователя.
+            dispatcher = req.getServletContext().getRequestDispatcher("/index.jsp");
             user = new User("nobody", "nobody", "nobody");
         }
+
+        if ("admin".equals(login) && "admin".equals(password)) {
+            dispatcher = req.getServletContext().getRequestDispatcher("/adminServlet");
+        }
+
         req.setAttribute("existingUser", user);
         dispatcher.forward(req, resp);
 

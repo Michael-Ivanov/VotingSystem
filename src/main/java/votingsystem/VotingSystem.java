@@ -1,10 +1,10 @@
 package votingsystem;
 
 import database.DBService;
-import commandlineui.CommandLineUI;
 import users.Admin;
 import users.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VotingSystem {
@@ -17,6 +17,8 @@ public class VotingSystem {
     private VotingSystem() {
         dbService = new DBService();
         this.users = getUsersListFromDB();
+
+        currentVoting = new Voting("The best male actor ever", getCandidatesFromDB()); /*временная заглушка*/
 //        dbService.printConnectionInfo();  // Проверка подключения к базе
     }
 
@@ -51,6 +53,7 @@ public class VotingSystem {
     //    Добавление нового пользователя
     public int addUser(String name, String login, String password) {
         int result = dbService.addUserToDB(name, login, password);
+//        обновление ссписка пользователей в памяти
         users = getUsersListFromDB();
         return result;
     }
@@ -85,5 +88,9 @@ public class VotingSystem {
             }
         }
         return null;
+    }
+
+    public List<Candidate> getCandidatesFromDB() {
+        return dbService.getCandidatesListFromDB();
     }
 }

@@ -1,5 +1,6 @@
 package users;
 
+import database.DBService;
 import users.User;
 import votingsystem.Candidate;
 import votingsystem.Voting;
@@ -11,12 +12,14 @@ import java.util.Scanner;
 
 public class Admin extends User {
 
-    private VotingSystem votingSystem;
+    private final VotingSystem votingSystem;
     private static Admin admin;
+    private final DBService dbService;
 
     private Admin() {
         super("admin", "admin", "admin");
         votingSystem = VotingSystem.getInstance();
+        dbService = votingSystem.getDbService();
     }
 
     public static Admin getInstance() {
@@ -25,4 +28,6 @@ public class Admin extends User {
         }
         return admin;
     }
+
+
 }

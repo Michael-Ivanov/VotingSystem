@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="users.User" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,21 +8,21 @@
 </head>
 <body>
 <h1>Voting System</h1>
-<%  User user = (User) request.getAttribute("existingUser");%>
+<%  User user = (User) request.getAttribute("existingUser");
+    String promptLine = getLine(user);%>
 <%!
     String getLine(User user) {
         if (user != null) {
             if (user.getName().equals("nobody")) {
-                return "No such user. Please try again.";
-            } else {
-                return "Hello, " + user.getName();
+                return "<h4 style=\"color: red\">Incorrect user login or password. Please try again.</h4>";
             }
         } else {
-            return "Please log in";
+            return "<h4>Please log in</h4>";
         }
+        return "";
     }
 %>
-<h4><%=getLine(user)%></h4>
+<div><%=promptLine%></div>
 
 <form method="post" action="/loginServlet">
     <label for="login">Login:</label><br>
@@ -30,7 +31,7 @@
     <input type="password" id="password" name="password"><br>
     <br>
     <input type="submit" value="Login">
-    <a href="user_registration.html"><h4>Register new user</h4></a>
+    <a href="jsp/user_registration.jsp"><h4>Register new user</h4></a>
 </form>
 </body>
 </html>

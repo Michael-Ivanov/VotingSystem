@@ -1,6 +1,7 @@
 package database;
 
 import users.User;
+import votingsystem.Candidate;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,6 +73,21 @@ public class DBService {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public List<Candidate> getCandidatesListFromDB() {
+        List<Candidate> candidates = new ArrayList<>();
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM best_male_actor");
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int votes = resultSet.getInt("votes");
+                candidates.add(new Candidate(name, votes));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return candidates;
     }
 
     public void closeConnectionToDB() {

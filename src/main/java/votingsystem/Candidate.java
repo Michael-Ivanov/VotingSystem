@@ -9,6 +9,11 @@ public class Candidate {
         this.name = name;
     }
 
+    public Candidate(String name, int voices) {
+        this.name = name;
+        this.voices = voices;
+    }
+
     public String getName() {
         return name;
     }
