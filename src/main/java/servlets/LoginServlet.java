@@ -1,7 +1,6 @@
 package servlets;
 
 import users.User;
-import votingsystem.Voting;
 import votingsystem.VotingSystem;
 
 import javax.servlet.RequestDispatcher;
@@ -11,9 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-@WebServlet("/loginServlet")
+@WebServlet("/login_servlet")
 public class LoginServlet extends HttpServlet {
 
     VotingSystem votingSystem = VotingSystem.getInstance();
@@ -35,7 +33,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         if ("admin".equals(login) && "admin".equals(password)) {
-            dispatcher = req.getServletContext().getRequestDispatcher("/adminServlet");
+            dispatcher = req.getServletContext().getRequestDispatcher("/admin_servlet");
         }
 
         req.setAttribute("existingUser", user);

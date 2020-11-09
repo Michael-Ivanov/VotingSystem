@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/adminServlet")
+@WebServlet("/admin_servlet")
 public class AdminServlet extends HttpServlet {
 
     private VotingSystem votingSystem;
