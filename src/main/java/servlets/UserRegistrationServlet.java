@@ -25,20 +25,30 @@ public class UserRegistrationServlet extends HttpServlet {
         String name = req.getParameter("username");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        String correctness = checkCorrectInput(name, login, password); // todo: доделать, чтобы проверяло на нулевые значения ввода
+        String errInput = checkCorrectInput(name, login, password); // todo: доделать, чтобы проверяло на нулевые значения ввода
 
 
-        RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/jsp/user_registration.jsp");
+        RequestDispatcher dispatcher;
 
         User user = new User(name, login, password);
-        Boolean unique = false;
 
-        if (votingSystem.isUnique(login)) {
+
+        if (votingSystem.isUnique(login) && errInput.isEmpty()) {
             votingSystem.addUser(name, login, password);
-            unique = true;
+            dispatcher = req.getServletContext().getRequestDispatcher("/user_voting_servlet");
+        } else {
+            dispatcher = req.getServletContext().getRequestDispatcher("/jsp/user_registration.jsp");
+            if (!errInput.isEmpty()) {
+                req.setAttribute("errorLine", errInput);
+//                если пустые значения полей, сразу сообщить об ошибке ввода
+                dispatcher.forward(req, resp);
+            }
+            if (!votingSystem.isUnique(login)) {
+//                если пользователь ввел не уникальный логин
+                req.setAttribute("incorrectUser", user);
+            }
         }
-        req.setAttribute("unique", unique);
-        req.setAttribute("regUser", user);
+
         dispatcher.forward(req, resp);
 
     }
@@ -62,14 +72,10 @@ public class UserRegistrationServlet extends HttpServlet {
         }
         StringBuilder result = new StringBuilder();
         int size = errors.size();
-        int count = 1;
         if (size > 0) {
+            result.append("Incorrect input:<br>");
             for (String error : errors) {
-                if (count == size) {
-                    result.append(error).append(".");
-                } else {
-                    result.append(error).append(", ");
-                }
+                result.append(error).append("<br>");
             }
         }
         return result.toString();

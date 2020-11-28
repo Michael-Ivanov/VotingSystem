@@ -8,7 +8,7 @@
 </head>
 <body>
 <%
-    User user = (User) request.getAttribute("existingUser");
+    User user = (User) request.getAttribute("currentUser");
     VotingSystem votingSystem = VotingSystem.getInstance();
     Voting voting = votingSystem.getCurrentVoting();
     String votingTitleLine = "No voting available currently.";
