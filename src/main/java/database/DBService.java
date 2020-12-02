@@ -49,10 +49,11 @@ public class DBService {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
             while (resultSet.next()) {
-                String name = resultSet.getString(2);
-                String login = resultSet.getString(3);
-                String password = resultSet.getString(4);
-                users.add(new User(name, login, password));
+                String name = resultSet.getString("name");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                boolean isVoted = resultSet.getBoolean("is_voted");
+                users.add(new User(name, login, password, isVoted));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,6 +89,21 @@ public class DBService {
             e.printStackTrace();
         }
         return candidates;
+    }
+
+    public void addVoiceToCandidate(String candidateName) {
+
+    }
+
+    public void setUserVoted(User user, boolean isVoted) {
+        String login = "'" + user.getLogin() + "'";
+        int result;
+        try (Statement statement = connection.createStatement()) {
+            result = statement.executeUpdate("UPDATE users SET is_voted = " + isVoted +
+                    " WHERE login = " + login);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void closeConnectionToDB() {

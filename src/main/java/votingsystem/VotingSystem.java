@@ -13,6 +13,7 @@ public class VotingSystem {
     private List<User> users;
     private Voting currentVoting;
     private DBService dbService;
+    private User currentUser;
 
     private VotingSystem() {
         dbService = new DBService();
@@ -36,6 +37,14 @@ public class VotingSystem {
 
     public Voting getCurrentVoting() {
         return currentVoting;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
     public void setCurrentVoting(Voting currentVoting) {
@@ -78,6 +87,13 @@ public class VotingSystem {
         return null;  //todo: переделать, чтобы не возвращало null
     }
 
+    public void setCurrentUserVoted(boolean isVoted) {
+        if (currentUser != null) {
+            dbService.setUserVoted(currentUser, isVoted);
+            currentUser.setVoted(isVoted);
+        }
+    }
+
     //    Получение экземпляра пользователя по логину и паролю
     public User getLoggedUser(String login, String password) {
         if (login.length() > 0 && password.length() > 0) {
@@ -90,7 +106,7 @@ public class VotingSystem {
         return null;
     }
 
-    public List<Candidate> getCandidatesFromDB() {
+    private List<Candidate> getCandidatesFromDB() {
         return dbService.getCandidatesListFromDB();
     }
 }
