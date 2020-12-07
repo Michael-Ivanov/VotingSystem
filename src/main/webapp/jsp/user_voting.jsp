@@ -12,7 +12,7 @@
 </head>
 <body>
 <%
-    User user = (User) request.getAttribute("currentUser");
+    User user = (User) session.getAttribute("user");
 
     VotingSystem votingSystem = VotingSystem.getInstance();
     Voting voting = votingSystem.getCurrentVoting();
@@ -28,7 +28,7 @@
 <h4><%=votingTitleLine%>
 </h4>
 <p>Candidates list size = <%=candidates.size()%></p>
-<form action="user_voting_result" method="post">
+<form action="voting_result" method="post">
     <p>Please select one of the following candidates: </p>
     <%
         int count = 0;

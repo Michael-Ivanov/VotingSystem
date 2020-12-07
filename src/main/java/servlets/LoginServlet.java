@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/login_servlet")
@@ -23,20 +24,19 @@ public class LoginServlet extends HttpServlet {
 
         User user = votingSystem.findUser(login, password);
 
-        RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/user_voting_servlet");
+        RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/jsp/user_voting.jsp");
 
         if (user == null) {
-            // чтобы различать на index.jsp, пришел некорректный запрос или запроса не было
-            // направляем на ту же страницу, возвращая специальное значение пользователя.
             dispatcher = req.getServletContext().getRequestDispatcher("/index.jsp");
-            user = new User("nobody", "nobody", "nobody");
         }
 
         if ("admin".equals(login) && "admin".equals(password)) {
             dispatcher = req.getServletContext().getRequestDispatcher("/admin_servlet");
         }
 
-//        req.setAttribute("existingUser", user);
+        HttpSession session = req.getSession(false);
+        session.setAttribute("user", user);
+
         dispatcher.forward(req, resp);
 
     }

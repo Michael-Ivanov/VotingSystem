@@ -35,7 +35,7 @@ public class UserRegistrationServlet extends HttpServlet {
 
         if (votingSystem.isUnique(login) && errInput.isEmpty()) {
             votingSystem.addUser(name, login, password);
-            dispatcher = req.getServletContext().getRequestDispatcher("/user_voting_servlet");
+            dispatcher = req.getServletContext().getRequestDispatcher("/login_servlet");
         } else {
             dispatcher = req.getServletContext().getRequestDispatcher("/jsp/user_registration.jsp");
             if (!errInput.isEmpty()) {

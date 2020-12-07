@@ -8,21 +8,8 @@
 </head>
 <body>
 <h1>Voting System</h1>
-<%  User user = (User) request.getAttribute("existingUser");
-    String promptLine = getLine(user);%>
-<%!
-    String getLine(User user) {
-        if (user != null) {
-            if (user.getName().equals("nobody")) {
-                return "<h4 style=\"color: red\">Incorrect user login or password. Please try again.</h4>";
-            }
-        } else {
-            return "<h4>Please log in</h4>";
-        }
-        return "";
-    }
-%>
-<div><%=promptLine%></div>
+
+<h4>Please log in</h4>
 
 <form method="post" action="login_servlet">
     <label for="login">Login:</label><br>
