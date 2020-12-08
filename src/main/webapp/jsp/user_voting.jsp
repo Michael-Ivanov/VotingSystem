@@ -13,6 +13,9 @@
 <body>
 <%
     User user = (User) session.getAttribute("user");
+    if (user.isVoted()) {
+        response.sendRedirect("/voting_result");
+    }
 
     VotingSystem votingSystem = VotingSystem.getInstance();
     Voting voting = votingSystem.getCurrentVoting();
@@ -27,20 +30,14 @@
 </h2>
 <h4><%=votingTitleLine%>
 </h4>
-<p>Candidates list size = <%=candidates.size()%></p>
-<form action="voting_result" method="post">
-    <p>Please select one of the following candidates: </p>
+
+<p>Candidates list size = <%=candidates.size()%>
+</p>
+<div>
     <%
-        int count = 0;
-        for (Candidate candidate : candidates) {
-            count++;
+        request.getRequestDispatcher("/jsp/candidates.jsp").include(request, response);
     %>
-    <label for="can<%=count%>"><%=candidate.getName()%></label>
-    <input type="radio" id="can<%=count%>" name="users_choice" value="<%=candidate.getName()%>">
-    <br>
-    <% }
-    %>
-    <button type="submit">Submit</button>
-</form>
+</div>
+
 </body>
 </html>

@@ -25,6 +25,7 @@
 </head>
 <body>
 <%
+
     List<User> users = (List<User>) request.getAttribute("users");
     List<Candidate> candidates = (List<Candidate>) request.getAttribute("candidates");
     String visibility = (String) request.getAttribute("visibility");

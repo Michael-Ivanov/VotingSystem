@@ -92,7 +92,15 @@ public class DBService {
     }
 
     public void addVoiceToCandidate(String candidateName) {
-
+        candidateName = "'" + candidateName + "'";
+        try (Statement statement = connection.createStatement()){
+            statement.executeUpdate(
+                    "UPDATE best_male_actor " +
+                            "SET votes = votes + 1 " +
+                            "WHERE name = " + candidateName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setUserVoted(User user, boolean isVoted) {
